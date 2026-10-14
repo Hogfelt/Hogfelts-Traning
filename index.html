@@ -1,0 +1,187 @@
+<!doctype html><html lang="sv"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Högfelts träning 0.4.6</title><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><style>
+*{box-sizing:border-box}body{margin:0;background:#07111e;color:#f2f7ff;font:16px system-ui}main{max-width:650px;margin:auto;padding:calc(20px + env(safe-area-inset-top, 0px)) 16px calc(100px + env(safe-area-inset-bottom, 0px))}h1{font-size:27px}h2{font-size:22px}button,input,select{font:inherit;font-size:max(16px,1em);min-width:0;max-width:100%}input[type="date"]{display:block;width:100%;min-width:0;max-width:100%;-webkit-appearance:none;appearance:none}label,.card,.item{min-width:0;max-width:100%}button{cursor:pointer;border:1px solid #385470;background:#19324c;color:white;border-radius:12px;padding:12px}html,body{width:100%;max-width:100%;overflow-x:clip}input,select{background:#091a2c;color:white;border:1px solid #37516c;padding:12px;border-radius:10px;width:100%}label{display:grid;gap:5px;margin:12px 0;color:#c6d8ed}.card{background:linear-gradient(135deg,#11263c,#0b192a);border:1px solid #2a425b;border-radius:22px;padding:19px;margin:16px 0}.row{display:flex;align-items:center;justify-content:space-between;gap:9px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.tile{min-height:105px;text-align:left;font-weight:bold;font-size:18px;border-radius:17px}.tile small{display:block;font-size:12px;font-weight:normal;margin-top:9px}.gray{background:#304359}.pink{background:#ce3d84}.blue,.primary{background:#237fe4}.orange{background:#dd752b}.purple{background:#8753c4}.teal{background:#11999a}.green{background:#1caa58}.next{outline:3px solid #78c1ff}.muted{color:#afc4d9}.stack{display:grid;gap:10px}.item{padding:14px;background:#142b43;border-radius:13px}.buttons{display:flex;gap:8px;flex-wrap:wrap}.buttons button{flex:1}.wide{width:100%}.danger{background:#733342}.tabs{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:center;gap:8px;background:#081523ed;padding:12px 12px calc(12px + env(safe-area-inset-bottom, 0px))}.tabs button{border:0;background:none}.days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}.day{background:#152e48;border-radius:9px;text-align:center;padding:8px 2px;font-size:12px}.day b{display:block;font-size:21px}.day button{padding:6px;margin-top:5px;width:31px}.hidden{display:none}.small{font-size:13px}.sets{display:grid;grid-template-columns:repeat(auto-fit,minmax(65px,1fr));gap:8px}.selected{outline:2px solid #71c0ff}.back{background:transparent;border:0;color:#8ccaff}
+
+.plan-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.plan-actions button{width:100%;min-height:48px;overflow-wrap:anywhere}.plan-actions button:disabled{opacity:.55;cursor:default}
+.workout-list{display:grid;gap:10px}.exercise{border:1px solid #314d67;border-radius:15px;background:#10263d;overflow:hidden}.exercise-head{width:100%;display:flex;align-items:center;gap:12px;padding:15px;text-align:left;background:transparent;border:0;border-radius:0}.exercise-status{flex:none;display:grid;place-items:center;width:27px;height:27px;border:2px solid #8199b0;border-radius:50%;font-size:15px}.exercise-status.done{background:#1caa58;border-color:#1caa58;color:#fff}.exercise-title{flex:1;min-width:0}.exercise-title b{display:block;font-size:17px}.exercise-title small{display:block;margin-top:4px;color:#afc4d9}.exercise-chevron{color:#a9c9e7;font-size:21px}.exercise-body{padding:4px 15px 16px;border-top:1px solid #29445e}.exercise-body .sets{grid-template-columns:repeat(auto-fit,minmax(72px,1fr))}.exercise-body label{font-size:14px}.workout-meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.workout-meta label{margin:4px 0 12px}.workout-meta input{padding:10px}.progress-track{height:9px;background:#29425b;border-radius:99px;overflow:hidden}.progress-fill{height:100%;background:#1caa58;transition:width .2s}.points-budget{display:flex;align-items:center;gap:12px}.points-budget button{width:48px;height:48px}.points-budget strong{min-width:65px;text-align:center;font-size:23px}.workout-screen .card{margin-top:8px}.workout-screen .back{padding:9px 0}.subtle{font-size:13px;color:#afc4d9}
+.week-nav{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:16px 0}
+.week-nav>button{flex:none;min-width:43px;min-height:53px;font-size:24px}
+.week-center{text-align:center;min-width:0;flex:1}
+.week-title{font-size:24px;font-weight:800}
+.week-dates{font-size:13px;color:#b9cce0;margin:5px 0}
+.week-state{display:inline-block;border-radius:99px;padding:5px 12px;font-size:12px;font-weight:700}
+.week-current{background:#165c3e;color:#a7f5cb}
+.week-past{background:#33475d;color:#d9e6f5}
+.week-future{background:#174e78;color:#c3e6ff}
+.week-return{display:block;margin:0 auto 17px;padding:8px 14px;font-size:14px}
+.tile:disabled{opacity:.55;cursor:default}
+@media(max-width:390px){.week-title{font-size:20px}.week-nav{gap:5px}.week-nav>button{min-width:38px;padding:9px}}
+
+</style><main><h1 style="margin-bottom:3px">🏋️ Högfelts träning</h1><div class="muted small" style="margin-bottom:18px;opacity:.8">Version 0.4.6</div><div id="updateBanner" class="hidden item" style="margin-bottom:12px"></div><div id="app"></div></main><nav class="tabs" id="bottomTabs"><button onclick="go('plans')">⌂ Start</button><button onclick="go('history')">▤ Historik</button><button onclick="go('settings')">⚙ Inställningar</button></nav><script>
+const KEY='hogfelts-prototype-v01',id=()=>Math.random().toString(36).slice(2),today=()=>new Date().toLocaleDateString('sv-SE'),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])),start=s=>{let d=new Date(s+'T12:00:00');d.setDate(d.getDate()-(d.getDay()+6)%7);return d.toLocaleDateString('sv-SE')},shift=(s,n)=>{let d=new Date(s+'T12:00:00');d.setDate(d.getDate()+n);return d.toLocaleDateString('sv-SE')};
+let db;try{db=JSON.parse(localStorage.getItem(KEY))}catch(e){console.warn('Lagring ej tillgänglig',e)}db||={plans:[],active:null,logs:[],skips:[],points:{},showRun:true,showPoints:true,runs:[],offset:0,draft:null,pointsBudget:10};let view='plans',plan=null,pass=null,session=null,step=0,expandedExercise=null;db.drafts=db.drafts&&typeof db.drafts==='object'?db.drafts:{};if(db.draft?.planId&&db.draft?.passId&&!db.drafts[db.draft.planId+':'+db.draft.passId])db.drafts[db.draft.planId+':'+db.draft.passId]=db.draft;db.pointsBudget=Number.isFinite(+db.pointsBudget)&&+db.pointsBudget>0?Math.floor(+db.pointsBudget):10;const save=()=>{try{localStorage.setItem(testEnabled()?TEST_KEY:KEY,JSON.stringify(db))}catch(e){console.warn('Lokal lagring blockerad',e)}},active=()=>db.plans.find(p=>p.id===db.active),week=()=>shift(testEnabled()?testWeek():start(today()),db.offset*7),weekLogs=(p,w)=>db.logs.filter(l=>l.planId===p.id&&start(l.date)===w),skipped=(p,w,x)=>db.skips.some(s=>s.planId===p.id&&s.week===w&&s.passId===x);
+const TEST_KEY=KEY+'-test-v045',TEST_FLAG=KEY+'-test-active';
+let liveDb=db,testDb=null;
+const testEnabled=()=>localStorage.getItem(TEST_FLAG)==='yes';
+function prepareData(d){d.drafts=d.drafts&&typeof d.drafts==='object'?d.drafts:{};d.logs=Array.isArray(d.logs)?d.logs:[];d.skips=Array.isArray(d.skips)?d.skips:[];d.points=d.points||{};d.runs=d.runs||[];d.offset=Number(d.offset)||0;return d}
+function loadTest(){try{return JSON.parse(localStorage.getItem(TEST_KEY))}catch{return null}}
+function testWeek(){return db.testWeek||start(today())}
+function toggleTest(){
+ if(testEnabled()){
+  localStorage.setItem(TEST_FLAG,'no');db=prepareData(liveDb);
+ }else{
+  if(!confirm('Aktivera testläge? Träningsplanerna kopieras och testresultat hålls separata.'))return;
+  liveDb=db;testDb=prepareData(loadTest()||{...structuredClone(liveDb),logs:[],skips:[],points:{},runs:[],draft:null,drafts:{},offset:0,testWeek:start(today())});
+  localStorage.setItem(TEST_FLAG,'yes');db=testDb;
+ }
+ session=null;expandedExercise=null;save();go('settings');
+}
+function moveTestWeek(n){db.testWeek=shift(testWeek(),7*n);db.offset=0;save();render()}
+function clearTest(){if(!confirm('Radera alla testresultat och utkast? Träningsplanerna behålls.'))return;db.logs=[];db.skips=[];db.points={};db.runs=[];db.draft=null;db.drafts={};save();render()}
+if(testEnabled()){testDb=prepareData(loadTest()||{...structuredClone(liveDb),logs:[],skips:[],points:{},runs:[],draft:null,drafts:{},offset:0,testWeek:start(today())});db=testDb;}
+function next(p,w){
+ if(!p?.passes?.length)return null;
+ const end=shift(w,6);
+ let events=[...db.logs.filter(l=>l.planId===p.id).map(l=>({date:l.date,at:l.completedAt||l.date+'T12:00:00',passId:l.passId})),
+ ...db.skips.filter(s=>s.planId===p.id).map(s=>({date:s.date||s.week,at:s.at||(s.date||s.week)+'T12:00:00',passId:s.passId}))]
+ .filter(e=>p.rotation==='weekly'?start(e.date)===w:e.date<=end)
+ .sort((a,b)=>a.at.localeCompare(b.at));
+ const last=events.at(-1);
+ const i=last?p.passes.findIndex(x=>x.id===last.passId):-1;
+ return p.passes[(i+1)%p.passes.length].id;
+}
+function go(v){if(v==='home'&&view!=='home'&&view!=='workout'){db.offset=0;save()}view=v;render();window.scrollTo(0,0)}function render(){document.getElementById('app').innerHTML=({home,plans,editPlan,editPass,workout,history,settings,run}[view]||home)();document.getElementById('bottomTabs').classList.toggle('hidden',view==='workout')}
+function weekLabel(s){const d=new Date(s+'T12:00:00');d.setDate(d.getDate()+3);return d.getFullYear()}
+function weekDates(w){const f=d=>new Date(d+'T12:00:00').toLocaleDateString('sv-SE',{day:'numeric',month:'short'});return f(w)+'–'+f(shift(w,6))+' '+weekLabel(w)}
+function changeWeek(n){db.offset+=n;save();render()}
+function returnWeek(){db.offset=0;save();render()}
+function futureWeek(w){return !testEnabled()&&w>start(today())}
+function home(){let p=active(),w=week(),base=testEnabled()?testWeek():start(today()),relation=w===base?'current':w<base?'past':'future',status=relation==='current'?'Innevarande vecka':relation==='past'?'Tidigare vecka':'Framtida vecka',locked=futureWeek(w);
+let order=p?.passes||[];
+if(p?.rotation==='continuous'&&order.length){const first=next(p,shift(w,-7)),idx=Math.max(0,order.findIndex(x=>x.id===first));order=[...order.slice(idx),...order.slice(0,idx)]}
+return `<div class="card">${testEnabled()?'<p style="color:#ffda83">🧪 TESTLÄGE – resultaten sparas separat</p>':''}<h2>💪 Styrketräning</h2><div class="week-nav"><button aria-label="Föregående vecka" onclick="changeWeek(-1)">‹</button><div class="week-center"><div class="week-title">Vecka ${weekNo(w)} · ${weekLabel(w)}</div><div class="week-dates">${weekDates(w)}</div><span class="week-state week-${relation}">${status}${testEnabled()?' (test)':''}</span></div><button aria-label="Nästa vecka" onclick="changeWeek(1)">›</button></div>${db.offset!==0?'<button class="week-return" onclick="returnWeek()">↩ Till aktuell vecka</button>':''}${p?`<p class="muted">Aktiv plan: ${esc(p.name)}</p>${locked?'<p class="muted small">🔒 Framtida veckor är skrivskyddade tills veckan börjar.</p>':''}<div class="grid">${order.map(x=>{let i=p.passes.findIndex(y=>y.id===x.id),l=weekLogs(p,w).filter(y=>y.passId===x.id),skip=skipped(p,w,x.id),isNext=next(p,w)===x.id&&!l.length;return `<button class="tile ${l.length?'green':x.color} ${isNext?'next':''}" ${locked?'disabled':''} onclick="openPass('${x.id}')">${i+1}. ${esc(l.at(-1)?.passName||x.name)}<small>${l.length?'✓ '+l.map(y=>y.date.slice(5)).join(', '):skip?'⏭ Överhoppat':isNext?'⭐ Nästa pass':locked?'🔒 Framtida vecka':'Öppna'}</small></button>`}).join('')}</div>`:`<p>Ingen träningsplan ännu.</p><button class="primary wide" onclick="newPlan()">+ Skapa träningsplan</button>`}</div>${db.showRun?`<div class="card"><h2>🏃 Löpning</h2><button class="primary wide" onclick="go('run')">+ Registrera löppass</button>${db.runs.length?`<p class="muted">Senaste: ${esc(db.runs.at(-1).distance)} km · ${esc(db.runs.at(-1).time)}</p>`:''}</div>`:''}${db.showPoints?`<div class="card"><h2>🍫 Högfelt Points</h2><div class="days">${['Mån','Tis','Ons','Tor','Fre','Lör','Sön'].map((x,i)=>{let d=shift(w,i);return `<div class="day">${x}<b>${db.points[d]||0}</b><button ${locked?'disabled':''} onclick="points('${d}',-1)">−</button><button ${locked?'disabled':''} onclick="points('${d}',1)">+</button></div>`}).join('')}</div><p style="text-align:right">${Array.from({length:7},(_,i)=>db.points[shift(w,i)]||0).reduce((a,b)=>a+b,0)} av ${db.pointsBudget} p</p><div class="progress-track"><div class="progress-fill" style="width:${Math.min(100,Math.max(0,Array.from({length:7},(_,i)=>db.points[shift(w,i)]||0).reduce((a,b)=>a+b,0)/db.pointsBudget*100))}%"></div></div></div>`:''}`}
+function weekNo(s){let d=new Date(s+'T12:00:00');d.setDate(d.getDate()+3);let y=new Date(d.getFullYear(),0,1);return Math.ceil((((d-y)/86400000)+1)/7)}function points(d,n){if(futureWeek(start(d)))return;db.points[d]=Math.max(0,(db.points[d]||0)+n);save();render()}
+function plans(){return `<div class="card"><h2>Välj träningsplan</h2>${active()?`<div class="item"><p class="muted">Aktiv träningsplan</p><h2>${esc(active().name)}</h2><p class="muted">${active().passes.length} pass · ${active().rotation==='weekly'?'Veckovis':'Löpande'} rotation</p><button class="primary wide" onclick="go('home')">▶ Fortsätt till träningsplanen</button></div>`:'<p class="muted">Skapa din första träningsplan för att komma igång.</p>'}<div style="margin-top:14px"><button class="primary wide" onclick="newPlan()">+ Ny träningsplan</button></div></div><div class="card"><h2>Alla träningsplaner</h2><div class="stack" style="margin-top:16px">${db.plans.map(p=>`<div class="item"><b>${esc(p.name)}</b> <span class="muted small">${p.id===db.active?'✓ Aktiv':''}</span><p class="muted small">${p.passes.length} pass · ${p.rotation==='weekly'?'Veckovis':'Löpande'}</p><div class="plan-actions"><button ${p.id===db.active?'disabled title="Redan aktiv"':''} onclick="db.active='${p.id}';save();go('home')">Aktivera</button><button onclick="plan=structuredClone(db.plans.find(x=>x.id==='${p.id}'));go('editPlan')">Ändra</button><button onclick="copyPlan('${p.id}')">Kopiera</button><button class="danger" onclick="deletePlan('${p.id}')">Radera</button></div></div>`).join('')}</div></div>`}
+function newPlan(){plan={id:id(),name:'Ny träningsplan',rotation:'continuous',passes:[]};go('editPlan')}function copyPlan(pid){let p=structuredClone(db.plans.find(x=>x.id===pid));p.id=id();p.name+=' (kopia)';p.passes.forEach(x=>{x.id=id();x.exercises.forEach(e=>e.id=id())});db.plans.push(p);save();render()}function deletePlan(pid){if(!confirm('Radera plan och tillhörande historik permanent?'))return;db.plans=db.plans.filter(x=>x.id!==pid);db.logs=db.logs.filter(x=>x.planId!==pid);db.skips=db.skips.filter(x=>x.planId!==pid);for(const k of Object.keys(db.drafts))if(k.startsWith(pid+':'))delete db.drafts[k];if(db.active===pid)db.active=db.plans[0]?.id||null;save();render()}
+function editPlan(){return `<div class="card"><h2>Redigera träningsplan</h2><label>Plannamn<input value="${esc(plan.name)}" oninput="plan.name=this.value"></label><label>Rotation<select onchange="plan.rotation=this.value"><option value="continuous" ${plan.rotation==='continuous'?'selected':''}>Löpande</option><option value="weekly" ${plan.rotation==='weekly'?'selected':''}>Börja om varje måndag</option></select></label><h3>Pass</h3><div class="stack">${plan.passes.map((x,i)=>`<div class="item row"><div>${i+1}. <b>${esc(x.name)}</b><div class="muted small">${x.exercises.length} övningar</div></div><button onclick="pass=structuredClone(plan.passes[${i}]);pass.index=${i};go('editPass')">Ändra</button></div>`).join('')}</div><div class="buttons" style="margin-top:14px"><button type="button" onclick="addPass()">+ Pass</button><button class="primary" onclick="savePlan()">Spara plan</button></div></div>`}
+function savePlan(){if(!plan.name.trim()||!plan.passes.length)return alert('Ange namn och minst ett pass');let i=db.plans.findIndex(x=>x.id===plan.id);if(i<0)db.plans.push(plan);else db.plans[i]=plan;if(!db.active)db.active=plan.id;save();go('plans')}
+function editPass(){return `<div class="card"><h2>Redigera pass</h2><label>Namn<input value="${esc(pass.name)}" oninput="pass.name=this.value"></label><label>Knappfärg<select onchange="pass.color=this.value">${['gray','pink','blue','orange','purple','teal'].map((c,i)=>`<option value="${c}" ${pass.color===c?'selected':''}>${['Grå','Rosa','Blå','Orange','Lila','Turkos'][i]}</option>`).join('')}</select></label><h3>Övningar</h3><div class="stack">${pass.exercises.map((e,i)=>`<div class="item"><div class="row"><b>Övning ${i+1}</b><button onclick="pass.exercises.splice(${i},1);render()">Ta bort</button></div><label>Namn<input value="${esc(e.name)}" oninput="pass.exercises[${i}].name=this.value"></label><label>Typ<select onchange="pass.exercises[${i}].type=this.value;render()"><option value="reps" ${e.type==='reps'?'selected':''}>Vikt och reps</option><option value="time" ${e.type==='time'?'selected':''}>Tid</option><option value="check" ${e.type==='check'?'selected':''}>Endast avprickning</option></select></label>${e.type!=='check'?`<label>Set<input type="number" min="1" value="${e.sets}" oninput="pass.exercises[${i}].sets=+this.value"></label><label>Mål per set<input type="number" min="1" value="${e.target}" oninput="pass.exercises[${i}].target=+this.value"></label>`:''}</div>`).join('')}</div><div class="buttons" style="margin-top:14px"><button type="button" onclick="addExercise()">+ Övning</button><button class="primary" onclick="savePass()">Spara pass</button></div></div>`}
+function addExercise(){if(!pass){alert('Öppna ett pass först');return}if(!Array.isArray(pass.exercises))pass.exercises=[];pass.exercises.push({id:id(),name:'Ny övning',type:'reps',sets:3,target:8});render()}
+function addPass(){if(!plan){alert('Skapa en plan först');return}pass={id:id(),name:'Nytt pass',color:'gray',exercises:[],index:-1};go('editPass')}function savePass(){if(!pass.name.trim())return alert('Ange passnamn');if(pass.index<0)plan.passes.push(pass);else plan.passes[pass.index]=pass;delete pass.index;go('editPlan')}
+function openPass(pid){
+ const p=active(),x=p?.passes.find(y=>y.id===pid);
+ if(!p||!x)return alert('Passet kunde inte hittas');
+ const completed=weekLogs(p,week()).filter(l=>l.passId===pid).at(-1);
+ if(completed){openCompleted(completed.id);return;}
+ const old=db.drafts[p.id+':'+pid]||null;
+ const oldExercises=Array.isArray(old?.exercises)?old.exercises:[];
+ const exercises=(x.exercises||[]).map(e=>{
+  const previous=oldExercises.find(o=>o.id===e.id);
+  const count=e.type==='check'?1:Math.max(1,Number(e.sets)||1);
+  const compatible=previous&&previous.type===e.type;
+  return {...structuredClone(e),weight:compatible?String(previous.weight??''):'',
+    values:Array.from({length:count},(_,i)=>compatible?String(previous.values?.[i]??''):''),
+    progress:compatible?previous.progress||'':'',done:!!(compatible&&previous.done)};
+ });
+ // Behåll registrerade övningar som har tagits bort från planen.
+ for(const e of oldExercises)if(!exercises.some(x=>x.id===e.id)&&
+   (e.done||e.weight||e.progress||(e.values||[]).some(v=>v!=='')))exercises.push(e);
+ session={id:old?.id||id(),planId:p.id,passId:pid,passName:old?.passName||x.name,
+  date:old?.date||(testEnabled()?week():today()),exercises};
+ expandedExercise=old?.expandedExercise??null;
+ draft();go('workout');
+}
+function draft(){if(!session)return;if(session.readOnly||session.editCompleted)return;session.expandedExercise=expandedExercise;db.draft=session;db.drafts[session.planId+':'+session.passId]=session;save()}
+function leaveWorkout(){draft();session=null;expandedExercise=null;go('home')}
+function discardWorkout(){if(!confirm('Avbryt passet och radera alla registreringar i det pågående passet?'))return;
+ delete db.drafts[session.planId+':'+session.passId];db.draft=null;session=null;expandedExercise=null;save();go('home')}
+function skipWorkout(){const p=active(),w=week();if(!p||!session)return;
+ if(!confirm('Hoppa över passet? Eventuella registreringar i det pågående passet tas bort.'))return;
+ if(!skipped(p,w,session.passId))db.skips.push({planId:p.id,passId:session.passId,week:w,date:testEnabled()?week():today(),at:new Date().toISOString()});
+ delete db.drafts[session.planId+':'+session.passId];db.draft=null;session=null;expandedExercise=null;save();go('home')}
+function undoSkip(){const p=active(),w=week();if(!p)return;
+ db.skips=db.skips.filter(s=>!(s.planId===p.id&&s.passId===session?.passId&&s.week===w));save();render()}
+function previous(e){return db.logs.filter(l=>l.id!==session.id&&l.planId===session.planId&&l.date<=session.date)
+ .flatMap(l=>l.exercises).reverse().find(x=>x.name.toLowerCase()===e.name.toLowerCase()&&x.type===e.type)}
+function toggleExercise(eid){expandedExercise=expandedExercise===eid?null:eid;draft();render()}
+function setValue(eid,index,value){const e=session.exercises.find(x=>x.id===eid);if(e){e.values[index]=value;draft()}}
+function setWeight(eid,value){const e=session.exercises.find(x=>x.id===eid);if(e){e.weight=value;draft()}}
+function setProgress(eid,value){const e=session.exercises.find(x=>x.id===eid);if(e){e.progress=value;draft();render()}}
+function completeExercise(eid){
+ const e=session.exercises.find(x=>x.id===eid);if(!e)return;
+ if(e.type!=='check'){
+  const count=Math.max(1,Number(e.sets)||1);
+  if(!Array.isArray(e.values)||e.values.length<count||e.values.slice(0,count).some(v=>String(v??'').trim()===''||!Number.isFinite(Number(v))||Number(v)<=0))
+   return alert('Fyll i alla '+count+' set med ett värde större än noll.');
+  if(e.type==='reps'){
+   if(String(e.weight??'').trim()===''||!Number.isFinite(Number(e.weight))||Number(e.weight)<0)return alert('Ange en giltig vikt.');
+   if(!e.progress)return alert('Välj progression för nästa gång (↑, → eller ↓).');
+  }
+ }
+ e.done=true;expandedExercise=null;draft();render();
+}
+function reopenExercise(eid){const e=session.exercises.find(x=>x.id===eid);if(e){e.done=false;expandedExercise=eid;draft();render()}}
+function openCompleted(logId){
+ const l=db.logs.find(x=>x.id===logId);if(!l)return alert('Passet saknas i historiken');
+ session={...structuredClone(l),readOnly:true};expandedExercise=null;go('workout');
+}
+function editCompleted(){if(!session?.readOnly)return;session.readOnly=false;session.editCompleted=true;render()}
+function saveCompleted(){
+ if(!session?.editCompleted)return;
+ const i=db.logs.findIndex(l=>l.id===session.id);if(i<0)return alert('Registreringen saknas');
+ db.logs[i]={...structuredClone(session),readOnly:undefined,editCompleted:undefined};
+ session.readOnly=true;session.editCompleted=false;save();render();
+}
+function workout(){
+ if(!session)return `<div class="card"><p>Inget pågående pass.</p><button onclick="go('home')">Tillbaka</button></div>`;
+ const total=session.exercises.length,done=session.exercises.filter(e=>e.done).length,locked=!!session.readOnly;
+ return `<div class="workout-screen"><div class="card">
+ <div class="row"><button class="back" onclick="leaveWorkout()">‹ Tillbaka</button><strong>${esc(session.passName)}</strong><span class="muted small">${done}/${total} klara</span></div>
+ <div class="workout-meta"><label>Passnamn<input ${locked?'disabled':''} value="${esc(session.passName)}" oninput="session.passName=this.value;draft()"></label>
+ <label>Datum<input ${locked?'disabled':''} type="date" value="${esc(session.date)}" onchange="session.date=this.value;draft()"></label></div>
+ <div class="progress-track" style="margin:8px 0 18px"><div class="progress-fill" style="width:${total?done/total*100:0}%"></div></div>
+ <div class="workout-list">${session.exercises.map(e=>{
+ const open=expandedExercise===e.id,prev=previous(e),target=e.type==='check'?'Avprickning':`${e.sets} × ${e.target} ${e.type==='time'?'sek':'reps'}`;
+ return `<div class="exercise"><button class="exercise-head" onclick="toggleExercise('${e.id}')" aria-expanded="${open}">
+ <span class="exercise-status ${e.done?'done':''}">${e.done?'✓':''}</span><span class="exercise-title"><b>${esc(e.name)}</b><small>${esc(target)}${e.done?' · Klar':''}</small></span><span class="exercise-chevron">${open?'⌃':'⌄'}</span></button>
+ ${open?`<div class="exercise-body"><p class="subtle">${prev?`Förra gången: ${prev.weight?esc(prev.weight)+' kg · ':''}${esc((prev.values||[]).join(' / '))} ${esc(prev.progress||'')}`:'Inget tidigare resultat'}</p>
+ ${e.type==='reps'?`<label>Vikt (kg)<input ${locked?'disabled':''} type="number" inputmode="decimal" step="0.5" min="0" value="${esc(e.weight)}" oninput="setWeight('${e.id}',this.value)"></label>`:''}
+ ${e.type!=='check'?`<div class="sets">${Array.from({length:Math.max(1,Number(e.sets)||1)},(_,i)=>`<label>Set ${i+1} · ${e.type==='time'?'sek':'reps'}<input ${locked?'disabled':''} type="number" inputmode="numeric" min="0" placeholder="–" value="${esc(e.values[i]??'')}" oninput="setValue('${e.id}',${i},this.value)"></label>`).join('')}</div>
+ <p class="subtle" style="margin-bottom:7px">Progression nästa gång ${e.type==='time'?'(valfritt)':''}</p><div class="buttons">${['↑','→','↓'].map(x=>`<button ${locked?'disabled':''} class="${e.progress===x?'selected':''}" onclick="setProgress('${e.id}','${x}')">${x}</button>`).join('')}</div>`:''}
+ <div style="margin-top:15px">${locked?'':e.done?`<button class="wide" onclick="reopenExercise('${e.id}')">✎ Ändra registrering</button>`:`<button class="primary wide" onclick="completeExercise('${e.id}')">✓ Klarmarkera övning</button>`}</div></div>`:''}</div>`}).join('')||'<p class="muted">Inga övningar i passet.</p>'}</div>
+ ${!locked&&!session.editCompleted&&total&&done===total?`<button class="primary wide" style="margin-top:20px" onclick="finish()">🏁 Avsluta träningspass</button>`:''}
+ ${locked?`<button class="primary wide" style="margin-top:18px" onclick="editCompleted()">✎ Redigera avslutat pass</button>`:session.editCompleted?`<button class="primary wide" style="margin-top:18px" onclick="saveCompleted()">✓ Spara ändringar</button>`:`<div class="buttons" style="margin-top:20px"><button onclick="skipWorkout()">Hoppa över pass</button><button class="danger" onclick="discardWorkout()">Avbryt pass</button></div>`}
+ </div></div>`;
+}
+function finish(){if(!session||!session.exercises.length||!session.exercises.every(e=>e.done))return;
+ db.logs.push({...structuredClone(session),completedAt:new Date().toISOString()});delete db.drafts[session.planId+':'+session.passId];db.draft=null;session=null;expandedExercise=null;save();go('home')}
+function history(){return `<div class="card"><h2>Träningshistorik</h2><div class="stack">${[...db.logs].sort((a,b)=>b.date.localeCompare(a.date)).map(l=>`<div class="item"><div class="row"><div><b>${esc(l.passName)}</b><p class="muted small">${l.date}</p></div><button onclick="openCompleted('${l.id}')">Öppna</button></div><div id="d${l.id}" class="hidden">${l.exercises.map(e=>`<p>${esc(e.name)}: ${e.type==='check'?'✓':`${esc(e.weight)} kg · ${esc(e.values.join('/'))} ${esc(e.progress)}`}</p>`).join('')}<button class="danger" onclick="if(confirm('Radera?')){db.logs=db.logs.filter(x=>x.id!=='${l.id}');save();render()}">Radera registrering</button></div></div>`).join('')||'<p class="muted">Inga genomförda pass ännu.</p>'}</div></div>`}
+function run(){return `<div class="card"><h2>🏃 Löpning</h2><form onsubmit="addRun(event)"><label>Datum<input type="date" name="date" value="${today()}" required></label><label>Distans (km)<input type="number" step="0.01" min="0.01" name="distance" required></label><label>Tid (mm:ss)<input name="time" pattern="[0-9]+:[0-5][0-9]" placeholder="31:24" required></label><label>Typ<select name="where"><option>Utomhus</option><option>Löpband</option></select></label><button class="primary wide">Spara löppass</button></form><h3>Senaste pass</h3>${[...db.runs].reverse().map(r=>`<div class="item">${esc(r.date)} · ${esc(r.distance)} km · ${esc(r.time)} · ${esc(r.where)}</div>`).join('')}</div>`}function addRun(e){e.preventDefault();db.runs.push(Object.fromEntries(new FormData(e.target)));save();go('home')}
+function settings(){return `<div class="card"><h2>⚙ Inställningar</h2>
+ <button class="wide" onclick="go('plans')">Hantera träningsplaner →</button>
+ <label>Visa löpning <input type="checkbox" ${db.showRun?'checked':''} onchange="db.showRun=this.checked;save()" style="width:auto"></label>
+ <label>Visa Högfelt Points <input type="checkbox" ${db.showPoints?'checked':''} onchange="db.showPoints=this.checked;save()" style="width:auto"></label>
+ <div class="item"><b>Maxbudget Points per vecka</b><div class="points-budget" style="margin-top:12px"><button onclick="changeBudget(-1)">−</button><strong>${db.pointsBudget}</strong><button onclick="changeBudget(1)">+</button></div><p class="muted small">Registrerade points påverkas inte om du ändrar budgeten.</p></div>
+ <h3>🧪 Testläge</h3><div class="item"><p class="muted small">Separata testregistreringar. Träningsplanerna kopieras när testläget startas.</p>
+ <button class="wide" onclick="toggleTest()">${testEnabled()?'Stäng av testläge':'Aktivera testläge'}</button>
+ ${testEnabled()?`<div class="row" style="margin-top:14px"><button onclick="moveTestWeek(-1)">‹</button><strong>Vecka ${weekNo(testWeek())} · ${testWeek().slice(0,4)}</strong><button onclick="moveTestWeek(1)">›</button></div><p class="muted small">Nya pass registreras på måndagen i testveckan.</p><button class="danger wide" onclick="clearTest()">Rensa testdata</button>`:''}</div>
+ <h3>Uppdateringar</h3><p class="muted small">Installerad version: 0.4.6</p><button class="wide" onclick="checkUpdate(true)">↻ Sök efter uppdatering</button><div id="updateStatus" class="muted small" style="margin-top:8px"></div>
+ <h3>Säkerhetskopia</h3><button class="wide" onclick="backup()">⬇ Exportera säkerhetskopia</button>
+ <label>Importera säkerhetskopia<input type="file" accept="application/json" onchange="restore(this.files[0])"></label>
+ <p class="muted small">Version 0.4.6. All data sparas lokalt på den här enheten.</p></div>`}
+function changeBudget(delta){db.pointsBudget=Math.max(1,Math.min(999,db.pointsBudget+delta));save();render()}
+async function checkUpdate(manual=false){
+ const status=document.getElementById('updateStatus');if(status)status.textContent='Kontrollerar…';
+ try{
+  const r=await fetch('./index.html?check='+Date.now(),{cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);
+  const html=await r.text(),found=html.match(/<title>Högfelts träning ([0-9.]+)<\/title>/);
+  if(!found)throw Error('Versionsnummer saknas på servern');
+  const latest=found[1],current='0.4.6';
+  if(latest===current){if(status)status.textContent='Du har senaste versionen ('+current+').';return}
+  const isNewer=latest.split('.').map(Number).reduce((a,n,i)=>a+(n-(current.split('.').map(Number)[i]||0))*Math.pow(100,2-i),0)>0;
+  if(isNewer){const banner=document.getElementById('updateBanner');if(banner){banner.classList.remove('hidden');banner.innerHTML='Ny version '+esc(latest)+' finns. <button onclick="forceUpdate()">Uppdatera nu</button>';}if(status)status.innerHTML='Ny version '+esc(latest)+' finns. <button onclick="forceUpdate()">Uppdatera nu</button>';}
+  else if(status)status.textContent='Servern visar version '+latest+'.';
+ }catch(e){if(status)status.textContent='Kunde inte kontrollera uppdateringar: '+e.message;else if(manual)alert('Kunde inte kontrollera uppdateringar.')}
+}
+function forceUpdate(){save();const u=new URL(location.href);u.searchParams.set('v',Date.now().toString());location.replace(u.href)}
+function backup(){let blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='hogfelts-traning-backup.json';a.click();URL.revokeObjectURL(a.href)}async function restore(file){if(!file)return;try{let d=JSON.parse(await file.text());if(!Array.isArray(d.plans)||!Array.isArray(d.logs))throw Error('Fel format');if(!confirm('Ersätt befintlig data?'))return;db=prepareData(d);if(testEnabled())testDb=db;else liveDb=db;save();go('home')}catch{alert('Ogiltig säkerhetskopia')}}try{render();setTimeout(()=>checkUpdate(false),2500)}catch(e){console.error(e);document.getElementById('app').innerHTML='<div class="card"><h2>Prototypen kunde inte starta</h2><p>Öppna filen i Safari eller på en webbserver. Fel: '+esc(e.message)+'</p></div>'}
+</script></html>
